@@ -34,12 +34,26 @@ public class MainActivity extends AppCompatActivity {
     void animateImage(ImageView image, int imageId) {
         final ImageView animatedImage = image;
         final int animatedImageId = imageId;
-        animatedImage.animate().alpha(0f).setDuration(1000);
+        animatedImage.animate()
+            .alpha(0f)
+            .setDuration(1000);
+        animatedImage.animate()
+            .rotationBy(360f)
+            .scaleX(-0.5f)
+            .scaleY(-0.5f)
+            .setDuration(500);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
+                animatedImage.animate()
+                    .rotationBy(360f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(500);
                 animatedImage.setImageResource(animatedImageId);
-                animatedImage.animate().alpha(1f).setDuration(1000);
+                animatedImage.animate()
+                    .alpha(1f)
+                    .setDuration(1000);
             }
         }, 1000);
     }
