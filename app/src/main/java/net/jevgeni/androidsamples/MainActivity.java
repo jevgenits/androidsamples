@@ -4,10 +4,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.Toast;
+
 import net.jevgeni.androidsamples.toasts.ToastManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         toastManager.printText("Hello world!", MainActivity.this);
 
         setupSeekBar();
+        setupListView();
     }
 
     public void imageClicked(View view) {
@@ -33,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void setupSeekBar() {
+    private void setupSeekBar() {
         final ImageView image = findViewById(R.id.imageView);
         SeekBar bar = findViewById(R.id.rotationSeekBar);
         bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -55,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void animateImage(ImageView image, int imageId) {
+    private void animateImage(ImageView image, int imageId) {
         final ImageView animatedImage = image;
         final int animatedImageId = imageId;
         animatedImage.animate()
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
     }
 
-    boolean isSameImage(ImageView imageView, int imageResource) {
+    private boolean isSameImage(ImageView imageView, int imageResource) {
         if (imageView == null) {
             return false;
         }
@@ -91,5 +101,24 @@ public class MainActivity extends AppCompatActivity {
             .getDrawable(imageResource, MainActivity.this.getTheme())
             .getConstantState();
         return imageView.getDrawable().getConstantState() ==  constantState;
+    }
+
+    private void setupListView(){
+        ListView myListView = findViewById(R.id.myListView);
+        final ArrayList<String> items = new ArrayList<>();
+        items.add("one");
+        items.add("two");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        myListView.setAdapter(adapter);
+
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String text = "Item tapped " + items.get(i);
+                Log.i("App", text);
+                Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+                adapterView.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }
