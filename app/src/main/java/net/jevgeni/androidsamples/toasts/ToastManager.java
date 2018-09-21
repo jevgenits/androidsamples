@@ -1,4 +1,4 @@
-package net.jevgeni.androidsamples.toast;
+package net.jevgeni.androidsamples.toasts;
 
 import android.content.Context;
 import android.widget.Toast;

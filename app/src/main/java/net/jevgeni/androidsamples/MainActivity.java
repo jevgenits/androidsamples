@@ -1,13 +1,13 @@
 package net.jevgeni.androidsamples;
 
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import net.jevgeni.androidsamples.toast.ToastManager;
+import android.widget.SeekBar;
+import net.jevgeni.androidsamples.toasts.ToastManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,15 +20,39 @@ public class MainActivity extends AppCompatActivity {
 
         toastManager = new ToastManager();
         toastManager.printText("Hello world!", MainActivity.this);
+
+        setupSeekBar();
     }
 
     public void imageClicked(View view) {
-        final ImageView image = findViewById(R.id.imageView);
+        ImageView image = findViewById(R.id.imageView);
         if (isSameImage(image, android.R.drawable.btn_star_big_on)) {
             animateImage(image, android.R.drawable.btn_star_big_off);
         } else {
             animateImage(image, android.R.drawable.btn_star_big_on);
         }
+    }
+
+    void setupSeekBar() {
+        final ImageView image = findViewById(R.id.imageView);
+        SeekBar bar = findViewById(R.id.rotationSeekBar);
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(final SeekBar seekBar, final int progress,
+                                          final boolean fromUser) {
+                image.animate().rotation(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(final SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(final SeekBar seekBar) {
+
+            }
+        });
     }
 
     void animateImage(ImageView image, int imageId) {
