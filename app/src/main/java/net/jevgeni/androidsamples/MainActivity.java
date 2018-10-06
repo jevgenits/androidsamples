@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import net.jevgeni.androidsamples.network.DownloadSamples;
 import net.jevgeni.androidsamples.toasts.ToastManager;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupSeekBar();
         setupListView();
+        new DownloadSamples().downloadContent();
     }
 
     public void imageClicked(View view) {
